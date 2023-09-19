@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <head>
   <title>My Calculator</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -11,93 +10,82 @@
     <h1 class="flex justify-center text-blue-700 text-3xl font-bold mb-4">My Calculator by Pelangi Masita</h1>
 
     <div class="py-4 flex">
-      <input type="text" id="input1" class=" text-blue-700 w-full rounded-lg px-4 py-2 border border-blue-300" placeholder="Enter Number 1">
+      <input type="text" id="operand1" class=" text-blue-700 w-full rounded-lg px-4 py-2 border border-blue-300" placeholder="Operand 1">
+    </div>
+    
+    <div class="py-4 flex">
+      <input type="text" id="operand2" class=" text-blue-700 w-full rounded-lg px-4 py-2 border border-blue-300" placeholder="Operand 2">
+    </div>
+
+
+    <div class="py-2 flex justify-center">
+      <div class="gap-4">
+        <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendOperator('+')">+</button>
+        <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendOperator('-')">-</button>
+        <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendOperator('*')">*</button>
+        <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendOperator('/')">/</button>
+      </div>
     </div>
 
     <div class="py-4 flex">
-      <input type="text" id="input2" class=" text-blue-700 w-full rounded-lg px-4 py-2 border border-blue-300" placeholder="Enter Number 2">
-    </div>
+        <input id="operator">
+      </div>
 
-    <div class="grid grid-cols-3 gap-4">
-      
-      <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendNumber('1')">1</button>
-      <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendNumber('2')">2</button>
-      <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendNumber('3')">3</button>
-      <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendNumber('4')">4</button>
-      <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendNumber('5')">5</button>
-      <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendNumber('6')">6</button>
-      <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendNumber('7')">7</button>
-      <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendNumber('8')">8</button>
-      <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendNumber('9')">9</button>
-      <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendNumber('0')">0</button>
-      
-      <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendOperator('+')">+</button>
-      <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendOperator('-')">-</button>
-      <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendOperator('*')">*</button>
-      <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="appendOperator('/')">/</button>
-
-      <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="calculate()">=</button>
+    <div class="py-4 flex">
       <button class="bg-blue-200 hover:bg-blue-300 text-blue-700 font-bold py-2 px-4 rounded" onclick="clearInput()">Clear</button>
     </div>
+    <div id="result" class="flex justify-center text-blue-700 text-xl font-bold mb-4"></div>
     </div>
   </div>
 
   <script>
-    let input1 = document.getElementById('input1');
-    let input2 = document.getElementById('input2');
-
-    function appendNumber(number) {
-      if (input1.value === '') {
-        input1.value = number;
-      } else {
-        input2.value += number;
-      }
-    }
-
-    function appendOperator(operator) {
-      input2.value = operator;
-    }
+    let operand1 = document.getElementById('operand1');
+    let operand2 = document.getElementById('operand2');
+    let operator = document.getElementById('operator');
+    let resultContainer = document.getElementById('result');
 
     function calculate() {
-      try {
-        let num1 = parseFloat(input1.value);
-        let num2 = parseFloat(input2.value);
-
-        if (isNaN(num1) || isNaN(num2) || input2.value === '') {
-          input1.value = 'Invalid input';
-          input2.value = '';
-        } else {
-          let result;
-          switch (input2.value) {
-            case '+':
-              result = num1 + num2;
-              break;
-            case '-':
-              result = num1 - num2;
-              break;
-            case '*':
-              result = num1 * num2;
-              break;
-            case '/':
-              result = num1 / num2;
-              break;
-            default:
-              input1.value = 'Invalid operator';
-              input2.value = '';
-              return;
-          }
-          input1.value = result;
-          input2.value = '';
-        }
-      } catch (error) {
-        input1.value = 'Error';
-        input2.value = '';
+      let result;
+      let o1 = parseFloat(operand1.value);
+      let o2 = parseFloat(operand2.value);
+      let op = operator.value;
+      
+      switch(op) {
+        case '+':
+          result = o1 + o2;
+          break;
+        case '-':
+          result = o1 - o2;
+          break;
+        case '*':
+          result = o1 * o2;
+          break;
+        case '/':
+          result = o1 / o2;
+          break;
+        default:
+          result = 'Invalid Operator';
       }
+      
+      if(isNaN(result)) {
+        result = 'Invalid Operand';
+      }
+      
+      resultContainer.innerText = "Result: " + result;
     }
 
     function clearInput() {
-      input1.value = '';
-      input2.value = '';
+      operand1.value = '';
+      operand2.value = '';
+      operator.value = '';
+      resultContainer.innerText = '';
+    }
+
+    function appendOperator(op) {
+      operator.value += op;
+      if(op === '+' || op === '-' || op === '*' || op === '/') {
+        calculate();
+      }
     }
   </script>
 </body>
